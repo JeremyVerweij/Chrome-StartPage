@@ -11,20 +11,20 @@
     height: 100%;
     margin: 0;
     border-radius: 10px;
-    background-color: rgb(206, 206, 206);
+    background-color: rgb(255, 255, 255);
 }
 
 #searchbtn{
     border-radius: 10px;
     margin: -2px;
     height: 100%;
-    background-color: rgb(206, 206, 206);
+    background-color: rgb(255, 255, 255);
     cursor: pointer;
 }
 
 #google{
     position: fixed;
-    filter: invert(100%);
+    /*filter: invert(100%);*/
     top: 5%;
     left: calc(50% - 136px);
 }

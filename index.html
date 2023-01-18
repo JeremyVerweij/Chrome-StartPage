@@ -6,8 +6,9 @@
     <title>Start</title>
     <link rel="stylesheet" href="./search.css">
     <link rel="stylesheet" href="./shortcutlist.css">
+    <link rel="stylesheet" href="./contextMenu.css">
 </head>
-<body style="font-family: Arial, Helvetica, sans-serif;">
+<body style="background-color: rgb(37, 37, 37); font-family: Arial, Helvetica, sans-serif;">
     <img id="google" src="./img/google.png">
     <div id="searchBox">
         <input type="search" id="search">
@@ -20,6 +21,9 @@
         <p>Image url: <input id="ImageUrl" type="url"></p>
         <button id="ShortcutAddBtn">Add</button>
         <button id="ShortcutCancelBtn">Cancel</button>
+    </div>
+    <div id="contextMenu" style="display: none;">
+        <div class="item" id="eidt">Edit</div>
     </div>
 </body>
 <script src="./search.js"></script>
