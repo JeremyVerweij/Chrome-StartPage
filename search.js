@@ -13,9 +13,13 @@ const isValidUrl = urlString =>{
 } 
 
 
+function openInNewTab(url) {
+    window.open(url, '_blank').focus();
+}
+
 searchbtn.addEventListener("click", () => {
     var tmp = searchInput.value;
-    serach(tmp);
+    serach(tmp, window.event.ctrlKey);
 })
 
 searchInput.addEventListener("keypress", (e) => {
@@ -25,10 +29,16 @@ searchInput.addEventListener("keypress", (e) => {
     }
 })
 
-function serach(input){
-    if(isValidUrl(input))window.location = `${input}`;
-    if(input.includes("www.")||input.includes(".nl")||input.includes(".com")) {if(isValidUrl(`https://${input}`)) window.location = `https://${input}`}
-    else window.location = `https://www.google.com/search?q=${input}`;
+function serach(input, n){
+    if(n){
+        if(isValidUrl(input)) openInNewTab(`${input}`);
+        if(input.includes("www.")||input.includes(".nl")||input.includes(".com")) {if(isValidUrl(`https://${input}`)) openInNewTab(`https://${input}`)}
+        else openInNewTab(`https://www.google.com/search?q=${input}`);
+    }else{
+        if(isValidUrl(input))window.location = `${input}`;
+        if(input.includes("www.")||input.includes(".nl")||input.includes(".com")) {if(isValidUrl(`https://${input}`)) window.location = `https://${input}`}
+        else window.location = `https://www.google.com/search?q=${input}`;
+    }
 }
 
 //https://www.google.com/search?q=

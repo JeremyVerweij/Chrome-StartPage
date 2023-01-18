@@ -19,6 +19,7 @@
     margin: -2px;
     height: 100%;
     background-color: rgb(206, 206, 206);
+    cursor: pointer;
 }
 
 #google{

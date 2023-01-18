@@ -5,17 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Start</title>
     <link rel="stylesheet" href="./search.css">
+    <link rel="stylesheet" href="./shortcutlist.css">
 </head>
-<body>
+<body style="font-family: Arial, Helvetica, sans-serif;">
     <img id="google" src="./img/google.png">
     <div id="searchBox">
         <input type="search" id="search">
         <input type="button" value="Search" id="searchbtn">
     </div>
-    <div id="shortcutList">
-        <div id="list"></div>
-        <button id="new">+</button>
+    <div id="shortcutList"></div>
+    <div style="display: none;" id="popup">
+        <p>Name: <input id="Name" type="text"></p>
+        <p>Url: <input id="Url" type="url"></p>
+        <p>Image url: <input id="ImageUrl" type="url"></p>
+        <button id="ShortcutAddBtn">Add</button>
+        <button id="ShortcutCancelBtn">Cancel</button>
     </div>
 </body>
 <script src="./search.js"></script>
+<script src="./shortcut.js"></script>
 </html>
