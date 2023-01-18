@@ -14,6 +14,10 @@ const map = document.getElementById("map");
 const rmap = document.getElementById("rmap");
 const copy = document.getElementById("copy");
 const paste = document.getElementById("paste");
+const del = document.getElementById("del");
+const eidt2 = document.getElementById("eidt2");
+const del2 = document.getElementById("del2");
+
 
 map.addEventListener("click", () => {
     const tmp = list[clist];
@@ -30,16 +34,40 @@ map.addEventListener("click", () => {
     }
 })
 
-rmap.addEventListener("click", () => {
+del.addEventListener("click", () => {
+    const tmp = list[clist];
+    contextmenu.style.display = "none";
+    list.splice(clist, 1);
+    a.list = list;
+    a.maps = maps;
+    localStorage.setItem("start", JSON.stringify(a));
+    start();
+})
+
+del2.addEventListener("click", () => {
     const ctmp = clist2.split("/");
     const tmp = maps[ctmp[0]][ctmp[1]];
-    list.push(tmp);
-    maps[ctmp[0]].splice(clist2, 1);
+    contextmenu.style.display = "none";
+    maps[ctmp[0]].splice(ctmp[1], 1);
     if(maps[ctmp[0]].length == 0) delete maps[ctmp[0]]
     a.list = list;
     a.maps = maps;
     localStorage.setItem("start", JSON.stringify(a));
     start();
+})
+
+rmap.addEventListener("click", () => {
+    const ctmp = clist2.split("/");
+    const tmp = maps[ctmp[0]][ctmp[1]];
+    list.push(tmp);
+    console.log(ctmp[1]);
+    maps[ctmp[0]].splice(ctmp[1], 1);
+    if(maps[ctmp[0]].length == 0) delete maps[ctmp[0]]
+    a.list = list;
+    a.maps = maps;
+    localStorage.setItem("start", JSON.stringify(a));
+    start();
+    contextmenu2.style.display = "none";
 })
 
 eidt.addEventListener("click", () => {
@@ -48,6 +76,20 @@ eidt.addEventListener("click", () => {
     Url.value = tmp.url;
     ImageUrl.value = tmp.ImageUrl;
     list.splice(clist, 1);
+    openNewShortcutPopup();
+    a.list = list;
+    a.maps= maps;
+    localStorage.setItem("start", JSON.stringify(a));
+    start();
+})
+
+eidt2.addEventListener("click", () => {
+    const ctmp = clist2.split("/");
+    const tmp = maps[ctmp[0]][ctmp[1]];
+    Name.value = tmp.name;
+    Url.value = tmp.url;
+    ImageUrl.value = tmp.ImageUrl;
+    maps[ctmp[0]].splice(ctmp[1], 1);
     openNewShortcutPopup();
     a.list = list;
     a.maps= maps;
@@ -210,3 +252,4 @@ paste.addEventListener("click", async () => {
 
 
 start();
+
