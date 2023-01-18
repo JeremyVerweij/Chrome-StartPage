@@ -52,3 +52,8 @@
     background-color: rgb(255, 255, 255);
     z-index: 100;
 }
+
+.innerShortcut{
+    margin-bottom: 23px;
+    margin-top: 20px;
+}
