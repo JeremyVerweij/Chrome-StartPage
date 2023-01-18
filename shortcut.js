@@ -12,11 +12,14 @@ const contextmenu2 = document.getElementById("contextMenu2");
 const eidt = document.getElementById("eidt");
 const map = document.getElementById("map");
 const rmap = document.getElementById("rmap");
+const copy = document.getElementById("copy");
+const paste = document.getElementById("paste");
 
 map.addEventListener("click", () => {
     const tmp = list[clist];
     var tmp2 = window.prompt("Map name");
     if(tmp2!=null&&tmp2!=""&&tmp2!=undefined){
+        contextmenu.style.display = "none";
         if(maps[tmp2] == undefined) maps[tmp2] = [];
         maps[tmp2].push(tmp);
         list.splice(clist, 1);
@@ -54,7 +57,9 @@ eidt.addEventListener("click", () => {
 
 var clist = 0; 
 var clist2 = 0; 
-var a = JSON.parse(localStorage.getItem("start"))||{};
+var a = (localStorage.getItem("start"))||{};
+if(a == 'undefined') a = "{}";
+a = JSON.parse(a);
 var list = a.list||[];
 var maps = a.maps||{};
 var x = 0;
@@ -185,5 +190,23 @@ window.addEventListener("mousedown", (e)=>{
     if(e.target.offsetParent != contextmenu) contextmenu.style.display = "none";
     if(e.target.offsetParent != contextmenu2) contextmenu2.style.display = "none";
 })
+
+copy.addEventListener("click", () => {
+    navigator.clipboard.writeText(JSON.stringify(a)).then(() => {
+        // Alert the user that the action took place.
+        // Nobody likes hidden stuff being done under the hood!
+        alert("Copied to clipboard, you can now share the code with your friends.");
+    });
+})
+
+paste.addEventListener("click", async () => {
+    const text = await navigator.clipboard.readText();
+    a = JSON.parse(text);
+    localStorage.setItem("start", JSON.stringify(a));
+    list = a.list||[];
+    maps = a.maps||{};
+    start();
+})
+
 
 start();
