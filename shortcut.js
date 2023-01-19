@@ -1,109 +1,30 @@
-const shortcutList = document.getElementById("shortcutList");
-const wwidth = window.innerWidth;
-const shortcutListWidth = 0.5344444*wwidth;
-const popup = document.getElementById("popup");
-const Name = document.getElementById("Name");
-const Url = document.getElementById("Url");
-const ImageUrl = document.getElementById("ImageUrl");
-const ShortcutAddBtn = document.getElementById("ShortcutAddBtn");
-const ShortcutCancelBtn = document.getElementById("ShortcutCancelBtn");
-const contextmenu = document.getElementById("contextMenu");
-const contextmenu2 = document.getElementById("contextMenu2");
-const eidt = document.getElementById("eidt");
-const map = document.getElementById("map");
-const rmap = document.getElementById("rmap");
-const copy = document.getElementById("copy");
-const paste = document.getElementById("paste");
-const del = document.getElementById("del");
-const eidt2 = document.getElementById("eidt2");
-const del2 = document.getElementById("del2");
+const shortcutsList = document.getElementById("shortcutList");
+const windowWidth = window.innerWidth;
+const shortcutsListWidth = 0.5344444*windowWidth;
+const popupElement = document.getElementById("popup");
+const nameInputElement = document.getElementById("Name");
+const urlInputElement = document.getElementById("Url");
+const imageUrlInputElement = document.getElementById("ImageUrl");
+const shortcutAddButton = document.getElementById("ShortcutAddBtn");
+const shortcutCancelButton = document.getElementById("ShortcutCancelBtn");
+const contextMenuElement = document.getElementById("contextMenu");
+const contextMenu2Element = document.getElementById("contextMenu2");
+const editButton = document.getElementById("eidt");
+const mapButton = document.getElementById("map");
+const removeMapButton = document.getElementById("rmap");
+const copyButton = document.getElementById("copy");
+const pasteButton = document.getElementById("paste");
+const deleteButton = document.getElementById("del");
+const editButton2 = document.getElementById("eidt2");
+const deleteButton2 = document.getElementById("del2");
 
-
-map.addEventListener("click", () => {
-    const tmp = list[clist];
-    var tmp2 = window.prompt("Map name");
-    if(tmp2!=null&&tmp2!=""&&tmp2!=undefined){
-        contextmenu.style.display = "none";
-        if(maps[tmp2] == undefined) maps[tmp2] = [];
-        maps[tmp2].push(tmp);
-        list.splice(clist, 1);
-        a.list = list;
-        a.maps = maps;
-        localStorage.setItem("start", JSON.stringify(a));
-        start();
-    }
-})
-
-del.addEventListener("click", () => {
-    const tmp = list[clist];
-    contextmenu.style.display = "none";
-    list.splice(clist, 1);
-    a.list = list;
-    a.maps = maps;
-    localStorage.setItem("start", JSON.stringify(a));
-    start();
-})
-
-del2.addEventListener("click", () => {
-    const ctmp = clist2.split("/");
-    const tmp = maps[ctmp[0]][ctmp[1]];
-    contextmenu.style.display = "none";
-    maps[ctmp[0]].splice(ctmp[1], 1);
-    if(maps[ctmp[0]].length == 0) delete maps[ctmp[0]]
-    a.list = list;
-    a.maps = maps;
-    localStorage.setItem("start", JSON.stringify(a));
-    start();
-})
-
-rmap.addEventListener("click", () => {
-    const ctmp = clist2.split("/");
-    const tmp = maps[ctmp[0]][ctmp[1]];
-    list.push(tmp);
-    console.log(ctmp[1]);
-    maps[ctmp[0]].splice(ctmp[1], 1);
-    if(maps[ctmp[0]].length == 0) delete maps[ctmp[0]]
-    a.list = list;
-    a.maps = maps;
-    localStorage.setItem("start", JSON.stringify(a));
-    start();
-    contextmenu2.style.display = "none";
-})
-
-eidt.addEventListener("click", () => {
-    const tmp = list[clist];
-    Name.value = tmp.name;
-    Url.value = tmp.url;
-    ImageUrl.value = tmp.ImageUrl;
-    list.splice(clist, 1);
-    openNewShortcutPopup();
-    a.list = list;
-    a.maps= maps;
-    localStorage.setItem("start", JSON.stringify(a));
-    start();
-})
-
-eidt2.addEventListener("click", () => {
-    const ctmp = clist2.split("/");
-    const tmp = maps[ctmp[0]][ctmp[1]];
-    Name.value = tmp.name;
-    Url.value = tmp.url;
-    ImageUrl.value = tmp.ImageUrl;
-    maps[ctmp[0]].splice(ctmp[1], 1);
-    openNewShortcutPopup();
-    a.list = list;
-    a.maps= maps;
-    localStorage.setItem("start", JSON.stringify(a));
-    start();
-})
-
-var clist = 0; 
-var clist2 = 0; 
-var a = (localStorage.getItem("start"))||{};
-if(a == 'undefined') a = "{}";
-a = JSON.parse(a);
-var list = a.list||[];
-var maps = a.maps||{};
+var selectedList = 0; 
+var selectedList2 = 0; 
+var global = (localStorage.getItem("start"))||{};
+try{ global = JSON.parse(global);}
+catch{ global = {};}
+var list = global.list||[];
+var maps = global.maps||{};
 var x = 0;
 var y = 0;
 var opened = [];
@@ -117,68 +38,186 @@ class listItem {
     }
 }
 
-ShortcutAddBtn.addEventListener("click", () => {
-    if(popup.style.display == ""){
-        if(Url.checkValidity()&&ImageUrl.checkValidity()&&Url.value!=""&&ImageUrl.value!=""){
-            list.push(new listItem(Name.value, Url.value, ImageUrl.value));
-            a.list = list;
-            a.maps= maps;
-            localStorage.setItem("start", JSON.stringify(a));
+mapButton.addEventListener("click", () => {
+    // Get the currently selected shortcut
+    const currentShortcut = list[selectedList];
+    // Prompt user for the map name
+    const mapName = window.prompt("Map name");
+    // Check if the map name is valid
+    if (mapName != null && mapName !== "" && mapName !== undefined) {
+        // Hide the context menu
+        contextMenuElement.style.display = "none";
+        // Check if the map already exists
+        if (maps[mapName] === undefined) {
+            maps[mapName] = [];
+        }
+        // Add the current shortcut to the map
+        maps[mapName].push(currentShortcut);
+        // Remove the shortcut from the list
+        list.splice(selectedList, 1);
+        // Update global variable and save it to local storage
+        global.list = list;
+        global.maps = maps;
+        localStorage.setItem("start", JSON.stringify(global));
+        // Restart the application
+        start();
+    }
+});
+
+deleteButton.addEventListener("click", () => {
+    // Get the currently selected shortcut
+    const currentShortcut = list[selectedList];
+    // Hide the context menu
+    contextMenuElement.style.display = "none";
+    // Remove the shortcut from the list
+    list.splice(selectedList, 1);
+    // Update global variable and save it to local storage
+    global.list = list;
+    global.maps = maps;
+    localStorage.setItem("start", JSON.stringify(global));
+    // Restart the application
+    start();
+});
+
+deleteButton2.addEventListener("click", () => {
+    // Split the selected list index to get the map name and index
+    const currentMapIndex = selectedList2.split("/");
+    // Get the currently selected shortcut
+    const currentShortcut = maps[currentMapIndex[0]][currentMapIndex[1]];
+    // Hide the context menu
+    contextMenuElement.style.display = "none";
+    // Remove the shortcut from the map
+    maps[currentMapIndex[0]].splice(currentMapIndex[1], 1);
+    // Check if the map is empty and remove it if necessary
+    if(maps[currentMapIndex[0]].length == 0) delete maps[currentMapIndex[0]]
+    // Update global variable and save it to local storage
+    global.list = list;
+    global.maps = maps;
+    localStorage.setItem("start", JSON.stringify(global));
+    // Restart the application
+    start();
+});
+
+removeMapButton.addEventListener("click", () => {
+    // Split the selected list index to get the map name and index
+    const currentMapIndex = selectedList2.split("/");
+    // Get the currently selected shortcut
+    const currentShortcut = maps[currentMapIndex[0]][currentMapIndex[1]];
+    // Add the current shortcut to the list
+    list.push(currentShortcut);
+    // Remove the shortcut from the map
+    maps[currentMapIndex[0]].splice(currentMapIndex[1], 1);
+    // Check if the map is empty and remove it if necessary
+    if(maps[currentMapIndex[0]].length == 0) delete maps[currentMapIndex[0]]
+    // Update global variable and save it to local storage
+    global.list = list;
+    global.maps = maps;
+    localStorage.setItem("start", JSON.stringify(global));
+    // Restart the application
+    start();
+    // Hide the context menu
+    contextMenu2Element.style.display = "none";
+});
+
+editButton2.addEventListener("click", () => {
+    // Split the selected list index to get the map name and index
+    const currentMapIndex = selectedList2.split("/");
+    // Get the currently selected shortcut
+    const currentShortcut = maps[currentMapIndex[0]][currentMapIndex[1]];
+    // Set input fields values
+    nameInputElement.value = currentShortcut.name;
+    urlInputElement.value = currentShortcut.url;
+    imageUrlInputElement.value = currentShortcut.ImageUrl;
+    // Remove the shortcut from the map
+    maps[currentMapIndex[0]].splice(currentMapIndex[1], 1);
+    // Open the new shortcut popup
+    openNewShortcutPopup();
+    // Update global variable and save it to local storage
+    global.list = list;
+    global.maps = maps;
+    localStorage.setItem("start", JSON.stringify(global));
+    // Restart the application
+    start();
+});
+
+shortcutAddButton.addEventListener("click", () => {
+    // Check if the popup is open
+    if(popupElement.style.display == ""){
+        // Check if the input fields are valid and not empty
+        if(urlInputElement.checkValidity() && imageUrlInputElement.checkValidity() && urlInputElement.value !="" && imageUrlInputElement.value !=""){
+            // Add the new shortcut to the list
+            list.push(new listItem(nameInputElement.value, urlInputElement.value, imageUrlInputElement.value));
+            // Update global variable and save it to local storage
+            global.list = list;
+            global.maps = maps;
+            localStorage.setItem("start", JSON.stringify(global));
+            // Restart the application
             start();
-            popup.style.display = "none";
+            // Hide the popup
+            popupElement.style.display = "none";
         }
     }
-})
+});
 
-ShortcutCancelBtn.addEventListener("click", () => {
-    popup.style.display = "none";
-})
+shortcutCancelButton.addEventListener("click", () => {
+    // Hide the popup
+    popupElement.style.display = "none";
+});
 
-function addNewSchortcutToTheList(inner = "", listt, id = "", css = "", click){
-    var tmp = document.createElement("button");
-    tmp.className = "shortcut";
-    tmp.style = css;
-    tmp.innerHTML = inner;
-    tmp.id = id;
-    tmp.style.left = x + "px";
-    tmp.style.top = y + "px";
-    tmp.addEventListener("click", click);
+function addNewShortcutToTheList(inner = "", listIndex, id = "", css = "", clickEvent){
+    // Create a new button element
+    var newShortcutButton = document.createElement("button");
+    // Assign class and css style
+    newShortcutButton.className = "shortcut";
+    newShortcutButton.style = css;
+    // Assign inner html
+    newShortcutButton.innerHTML = inner;
+    // Assign id
+    newShortcutButton.id = id;
+    // Assign position
+    newShortcutButton.style.left = x + "px";
+    newShortcutButton.style.top = y + "px";
+    // Add click event
+    newShortcutButton.addEventListener("click", clickEvent);
+    // Check the id to determine which context menu to open
     if(id == ""){
-        tmp.addEventListener("contextmenu", (e) => {
+        newShortcutButton.addEventListener("contextmenu", (e) => {
             e.preventDefault();
-            contextmenu.style.display = "";
-            contextmenu.style.left = e.clientX;
-            contextmenu.style.top = e.clientY;
-            clist = listt;
-        })
+            contextMenuElement.style.display = "";
+            contextMenuElement.style.left = e.clientX;
+            contextMenuElement.style.top = e.clientY;
+            selectedList = listIndex;
+        });
     }else if(id == "1"){
-        tmp.addEventListener("contextmenu", (e) => {
+        newShortcutButton.addEventListener("contextmenu", (e) => {
             e.preventDefault();
-            contextmenu2.style.display = "";
-            contextmenu2.style.left = e.clientX;
-            contextmenu2.style.top = e.clientY;
-            clist2 = listt;
-        })
+            contextMenu2Element.style.display = "";
+            contextMenu2Element.style.left = e.clientX;
+            contextMenu2Element.style.top = e.clientY;
+            selectedList2 = listIndex;
+        });
     }
-    shortcutList.append(tmp);
+    // Append the new button to the shortcuts list
+    shortcutsList.append(newShortcutButton);
+    // Increment x and y positions
     x += 110;
-    if(x>shortcutListWidth) y += 110;
-    if(x>shortcutListWidth) x = 0;
+    if(x > shortcutsListWidth) y += 110;
+    if(x > shortcutsListWidth) x = 0;
 }
 
 function openNewShortcutPopup(){
-    popup.style.display = "";
+    popupElement.style.display = "";
 }
 
 function start(){
     x = 0;
     y = 0;
-    shortcutList.innerHTML = "";
+    shortcutsList.innerHTML = "";
 
-    addNewSchortcutToTheList(`<img class="innerShortcut" style="filter: invert(100%);" src="./img/plus.png">`, null, "new", "", () => {
-        Name.value = "";
-        Url.value = "";
-        ImageUrl.value = "";
+    addNewShortcutToTheList(`<img class="innerShortcut" style="filter: invert(100%);" src="./img/plus.png">`, null, "new", "", () => {
+        nameInputElement.value = "";
+        urlInputElement.value = "";
+        imageUrlInputElement.value = "";
         openNewShortcutPopup();
     })
 
@@ -201,11 +240,11 @@ function start(){
                 start();
             }
 
-            addNewSchortcutToTheList(tmp, null, "z", "", tmpe);
+            addNewShortcutToTheList(tmp, null, "z", "", tmpe);
 
             if(opened.includes(i)) for (let i2 = 0; i2 < element.length; i2++) {
                 const e = element[i2];
-                addNewSchortcutToTheList(e.inner, i + "/" + i2, "1", "", () => {
+                addNewShortcutToTheList(e.inner, i + "/" + i2, "1", "", () => {
                     if(window.event.ctrlKey){
                         openInNewTab(e.url)
                     }else{
@@ -218,7 +257,7 @@ function start(){
     
     for (let i = 0; i < list.length; i++) {
         const element = list[i];
-        addNewSchortcutToTheList(element.inner, i, "", "", () => {
+        addNewShortcutToTheList(element.inner, i, "", "", () => {
             if(window.event.ctrlKey){
                 openInNewTab(element.url)
             }else{
@@ -229,24 +268,24 @@ function start(){
 }
 
 window.addEventListener("mousedown", (e)=>{
-    if(e.target.offsetParent != contextmenu) contextmenu.style.display = "none";
-    if(e.target.offsetParent != contextmenu2) contextmenu2.style.display = "none";
+    if(e.target.offsetParent != contextMenuElement) contextMenuElement.style.display = "none";
+    if(e.target.offsetParent != contextMenu2Element) contextMenu2Element.style.display = "none";
 })
 
-copy.addEventListener("click", () => {
-    navigator.clipboard.writeText(JSON.stringify(a)).then(() => {
+copyButton.addEventListener("click", () => {
+    navigator.clipboard.writeText(JSON.stringify(global)).then(() => {
         // Alert the user that the action took place.
         // Nobody likes hidden stuff being done under the hood!
         alert("Copied to clipboard, you can now share the code with your friends.");
     });
 })
 
-paste.addEventListener("click", async () => {
+pasteButton.addEventListener("click", async () => {
     const text = await navigator.clipboard.readText();
-    a = JSON.parse(text);
-    localStorage.setItem("start", JSON.stringify(a));
-    list = a.list||[];
-    maps = a.maps||{};
+    global = JSON.parse(text);
+    localStorage.setItem("start", JSON.stringify(global));
+    list = global.list||[];
+    maps = global.maps||{};
     start();
 })
 
