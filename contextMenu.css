@@ -37,3 +37,23 @@
 #contextMenu2 .item:hover{
     background: #343434;
 }
+
+#contextMenu3{
+    position: fixed;
+    z-index: 100000000;
+    width: 150px;
+    background: #1b1a1a;
+    border-radius: 5px;
+}
+
+#contextMenu3 .item{
+    padding: 8px 10px;
+    font-size: 15px;
+    color: #eee;
+    cursor: pointer;
+    border-radius: inherit;
+}
+
+#contextMenu3 .item:hover{
+    background: #343434;
+}
