@@ -4,39 +4,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Start</title>
-    <link rel="stylesheet" href="./search.css">
-    <link rel="stylesheet" href="./shortcutlist.css">
-    <link rel="stylesheet" href="./contextMenu.css">
+    <link rel="stylesheet" href="./style/search.css">
+    <link rel="stylesheet" href="./style/shortcutlist.css">
+    <link rel="stylesheet" href="./style/contextMenu.css">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
-<body style="background-color: rgb(37, 37, 37); font-family: Arial, Helvetica, sans-serif;">
-    <img id="google" src="./img/google.png">
-    <div id="searchBox">
-        <input type="search" id="search">
-        <input type="button" value="Search" id="searchbtn">
-    </div>
-    <div id="shortcutList"></div>
-    <div style="display: none;" id="popup">
-        <p>Name: <input id="Name" type="text"></p>
-        <p>Url: <input id="Url" type="url"></p>
-        <p>Image url: <input id="ImageUrl" type="url"></p>
-        <button id="ShortcutAddBtn">Add</button>
-        <button id="ShortcutCancelBtn">Cancel</button>
-    </div>
-    <div id="contextMenu" style="display: none;">
-        <div class="item" id="eidt">Edit</div>
-        <div class="item" id="del">Delete</div>
-        <div class="item" id="map">Add to map</div>
-    </div>
-    <div id="contextMenu2" style="display: none;">
-        <div class="item" id="eidt2">Edit</div>
-        <div class="item" id="del2">Delete</div>
-        <div class="item" id="rmap">Remove from map</div>
-    </div>
-    <div id="contextMenu3" style="display: none;">
-        <div class="item" id="eidt3">Edit</div>
-        <div class="item" id="del3">Delete</div>
-    </div>
+<body id="main" style="background-color: rgb(37, 37, 37); font-family: Arial, Helvetica, sans-serif;">
     <div id="share">
         <p>
             Share Code:
@@ -44,7 +17,27 @@
             <button id="paste">Paste</button>
         </p>
     </div>
+    <main>
+        <div id="searchContainer">
+            <img id="google" src="./img/google.png">
+            <div id="searchBox">
+                <input type="search" id="search">
+                <input type="button" value="Search" id="searchbtn">
+            </div>
+        </div>
+        <div id="shortcutsContainer">
+            <div id="shortcutList"></div>
+            <div style="display: none;" id="popup">
+                <p>Name: <input id="Name" type="text"></p>
+                <p>Url: <input id="Url" type="url"></p>
+                <p>Image url: <input id="ImageUrl" type="url"></p>
+                <button id="ShortcutAddBtn">Add</button>
+                <button id="ShortcutCancelBtn">Cancel</button>
+            </div>
+        </div>
+    </main>
 </body>
-<script src="./search.js"></script>
-<script src="./shortcut.js"></script>
+<script src="./js/contextmenu.js"></script>
+<script src="./js/search.js"></script>
+<script src="./js/shortcut.js"></script>
 </html>
